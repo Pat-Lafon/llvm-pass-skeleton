@@ -1,17 +1,3 @@
-# llvm-pass-skeleton
+# Insert debugging prints
 
-A completely useless LLVM pass.
-It's for LLVM 3.8.
-
-Build:
-
-    $ cd llvm-pass-skeleton
-    $ mkdir build
-    $ cd build
-    $ cmake ..
-    $ make
-    $ cd ..
-
-Run:
-
-    $ clang -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c
+Writing print statements to help you debug sucks. Instead, this pass adds print statements after all of your binary operations to tell you the new value. It was a little tricky because to I add line numbers(So the messages actually make sense) which required sorting through how debug information is stored on LLVM. A bug I encountered was then calling printf on the result of an operation, it would print out the value 255. I found out this is because on it's own, printf is unique in that it won't do type conversions for you. https://stackoverflow.com/questions/8303673/why-cast-is-needed-in-printf
